@@ -1,0 +1,31 @@
+
+Başlatma:
+
+Mod seçimi için buton kontrol edilir.
+Çizgi izleme modu seçildiğinde, zamanlayıcı başlatılır (3 dakika).
+Çizgi Algılama ve Takip:
+
+Kontrast sensörlerinden veri okunur.
+Çizgi algılandığında, robot çizgiyi takip edecek şekilde motorlarını ayarlar.
+Çizgi Kaybı:
+
+Çizgi kaybedildiğinde, robot çizgiyi tekrar bulmak için motorlarını ayarlar.
+Süre Kontrolü:
+
+Bu adımlar parkur tamamlanana veya 3 dakika dolana kadar tekrarlanır.
+Pseudocode:
+Başlat
+  Eğer buton basılıysa
+    Modu kontrol et
+      Eğer çizgi izleme modu ise
+        Zamanlayıcı başlat (3 dakika)
+        Tekrarla (3 dakika dolana kadar veya parkur tamamlanana kadar)
+          Kontrast sensörlerinden veri oku
+          Eğer çizgi algılandıysa
+            Çizgiyi takip et (motorları ayarla)
+          Eğer çizgi kaybedildiyse
+            Çizgiyi tekrar bulmak için motorları ayarla
+        Tekrarla bitiş
+      Mod kontrol bitiş
+    Buton kontrol bitiş
+Başlat bitiş

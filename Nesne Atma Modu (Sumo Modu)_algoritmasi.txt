@@ -1,0 +1,33 @@
+Başlatma:
+
+Mod seçimi için buton kontrol edilir.
+Sumo modu seçildiğinde, zamanlayıcı başlatılır (60 saniye).
+Nesne Algılama ve Yaklaşma:
+
+Mesafe sensörlerinden veri okunur.
+Nesne algılandığında, robot nesnenin konumuna göre yönlenir ve nesneye doğru hareket eder.
+Nesneyi İtme:
+
+Nesneye yeterince yaklaşıldığında, robot hızlanarak nesneyi platformdan itmeye çalışır.
+Süre Kontrolü:
+
+Bu adımlar 5 nesne için veya 60 saniye dolana kadar tekrarlanır.
+
+Pseudocode:
+
+Başlat
+  Eğer buton basılıysa
+    Modu kontrol et
+      Eğer sumo modu ise
+        Zamanlayıcı başlat (60 saniye)
+        Tekrarla (60 saniye dolana kadar veya 5 nesne atılana kadar)
+          Mesafe sensörlerinden veri oku
+          Eğer nesne algılandıysa
+            Nesnenin yönünü belirle
+            Nesneye doğru yönel ve hareket et
+            Eğer nesneye yeterince yaklaşıldıysa
+              Nesneyi itmek için hızlan
+        Tekrarla bitiş
+      Mod kontrol bitiş
+    Buton kontrol bitiş
+Başlat bitiş

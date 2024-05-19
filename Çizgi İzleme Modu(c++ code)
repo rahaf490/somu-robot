@@ -1,0 +1,70 @@
+#include <Arduino.h>
+
+// Sensör ve motor pin tanımlamaları
+const int leftLineSensorPin = A1;
+const int rightLineSensorPin = A2;
+const int leftMotorPin = 3;
+const int rightMotorPin = 5;
+const int buttonPin = 7;
+
+// Zaman kontrolü için değişkenler
+unsigned long startTime;
+
+void setup() {
+  pinMode(leftLineSensorPin, INPUT);
+  pinMode(rightLineSensorPin, INPUT);
+  pinMode(leftMotorPin, OUTPUT);
+  pinMode(rightMotorPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
+}
+
+bool detectLine() {
+  int leftValue = analogRead(leftLineSensorPin);
+  int rightValue = analogRead(rightLineSensorPin);
+  return (leftValue < 500 || rightValue < 500); // Çizgi algılama eşiği
+}
+
+void followLine() {
+  int leftValue = analogRead(leftLineSensorPin);
+  int rightValue = analogRead(rightLineSensorPin);
+
+  if (leftValue < 500 && rightValue >= 500) {
+    // Sola dön
+    analogWrite(leftMotorPin, 0);
+    analogWrite(rightMotorPin, 255);
+  } else if (rightValue < 500 && leftValue >= 500) {
+    // Sağa dön
+    analogWrite(leftMotorPin, 255);
+    analogWrite(rightMotorPin, 0);
+  } else {
+    // Düz git
+    analogWrite(leftMotorPin, 255);
+    analogWrite(rightMotorPin, 255);
+  }
+}
+
+void searchForLine() {
+  // Çizgiyi bulmak için rastgele bir dönüş hareketi
+  analogWrite(leftMotorPin, 255);
+  analogWrite(rightMotorPin, 128);
+  delay(200);
+}
+
+void lineFollowingMode() {
+  startTime = millis();
+
+  while (millis() - startTime < 180000) { // 3 dakika
+    if (detectLine()) {
+      followLine();
+    } else {
+      searchForLine();
+    }
+  }
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == HIGH) {
+    lineFollowingMode();
+  }
+}
